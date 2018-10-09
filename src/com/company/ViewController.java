@@ -1,5 +1,6 @@
 package com.company;
 
+
 public class ViewController {
 
     Intro intro;
@@ -18,6 +19,7 @@ public class ViewController {
         frame.remove(intro);
 
         menu = new Menu();
+
         frame.add(menu);
         menu.updateUI();
     }

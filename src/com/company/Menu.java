@@ -4,26 +4,27 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Menu extends JPanel {
-    GroupLayout layout = new GroupLayout(this);
+
     JButton menuButton1, menuButton2, menuButton3, menuButton4;
     public Menu() {
         super();
-        setBackground(Color.blue);
+        setBackground(Color.DARK_GRAY);
         menuButton1 = new JButton("Game Menu");
         menuButton2 = new JButton("Options");
         menuButton3 = new JButton("Instructions");
         menuButton4 = new JButton("Credits");
+        BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
         this.setLayout(layout);
-        layout.setHorizontalGroup(
+        menuButton1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menuButton2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menuButton3.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menuButton4.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                layout.createSequentialGroup()
-                .addComponent(menuButton1)
-                .addComponent(menuButton2)
-                .addComponent(menuButton3)
-                .addComponent(menuButton4)
-        );
-        layout.setVerticalGroup(
-                layout.createSequentialGroup()
-        );
+        add(menuButton1);
+        add(menuButton2);
+        add(menuButton3);
+        add(menuButton4);
+
+
     }
 }
