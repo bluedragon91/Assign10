@@ -5,25 +5,27 @@ import java.awt.*;
 
 public class Menu extends JPanel {
 
-    JButton menuButton1, menuButton2, menuButton3, menuButton4;
+    JButton GamesButton, OptionsButton, InstructionButton, Credits;
     public Menu() {
         super();
         setBackground(Color.DARK_GRAY);
-        menuButton1 = new JButton("Game Menu");
-        menuButton2 = new JButton("Options");
-        menuButton3 = new JButton("Instructions");
-        menuButton4 = new JButton("Credits");
+        GamesButton = new JButton("Game Menu");
+        OptionsButton = new JButton("Options");
+        InstructionButton = new JButton("Instructions");
+        Credits = new JButton("Credits");
         BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
         this.setLayout(layout);
-        menuButton1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        menuButton2.setAlignmentX(Component.CENTER_ALIGNMENT);
-        menuButton3.setAlignmentX(Component.CENTER_ALIGNMENT);
-        menuButton4.setAlignmentX(Component.CENTER_ALIGNMENT);
+        GamesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        OptionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        InstructionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Credits.setAlignmentX(Component.CENTER_ALIGNMENT);
+        GamesButton.setBackground(Color.LIGHT_GRAY);
+        GamesButton.setForeground(Color.LIGHT_GRAY);
 
-        add(menuButton1);
-        add(menuButton2);
-        add(menuButton3);
-        add(menuButton4);
+        add(GamesButton);
+        add(OptionsButton);
+        add(InstructionButton);
+        add(Credits);
 
 
     }

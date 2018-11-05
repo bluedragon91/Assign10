@@ -3,22 +3,24 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 
-public class Credits extends JPanel {
+public class Game1 extends JPanel {
 
     JButton Back;
-    public Credits(){
+
+    public Game1(){
         super();
-        setBackground(Color.darkGray);
-        setLayout(null);
+        setBackground(Color.DARK_GRAY);
         Back = new JButton("Back");
-        Back.setBounds(500, 500, 75, 50);
+
         add(Back);
     }
+
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.WHITE);
-        g.drawString("Made by Conenr Smith for IST 240", 500, 300);
+        g.drawString("Game1", 500, 300);
 
     }
+
 }
