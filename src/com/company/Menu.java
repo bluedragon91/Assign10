@@ -8,7 +8,7 @@ public class Menu extends JPanel {
     JButton GamesButton, OptionsButton, InstructionButton, Credits;
     public Menu() {
         super();
-        setBackground(Color.DARK_GRAY);
+        setBackground(Color.darkGray);
         GamesButton = new JButton("Game Menu");
         OptionsButton = new JButton("Options");
         InstructionButton = new JButton("Instructions");

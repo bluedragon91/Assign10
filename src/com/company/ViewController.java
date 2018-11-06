@@ -1,21 +1,28 @@
 package com.company;
 
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ViewController implements ActionListener {
 
+
+    int time = 0;
     Intro intro = new Intro();
     Menu menu = new Menu();
     MainFrame frame = new MainFrame();
-    GameMenu gameMenu = new GameMenu();
+    GameMenu gameMenu = new GameMenu(time);
     Options options = new Options();
     Credits credit = new Credits();
     Instructions instruc = new Instructions();
     Game1 g1 = new Game1();
     Game2 g2 = new Game2();
     Game3 g3 = new Game3();
+    Timer timer;
+    int timerDelay = 1000;
+
 
     public ViewController() {
         frame.add(intro);
@@ -33,11 +40,19 @@ public class ViewController implements ActionListener {
         menu.OptionsButton.addActionListener(this);
         menu.Credits.addActionListener(this);
         menu.updateUI();
+        timer = new Timer(timerDelay, this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
+
+        //TIMER ACTIONS
+        if(obj == timer){
+            time++;
+            gameMenu.time++;
+            gameMenu.updateUI();
+        }
 
         //MENU ACTION LISTENING
         if(obj == menu.GamesButton){
@@ -46,6 +61,7 @@ public class ViewController implements ActionListener {
             gameMenu.g2.addActionListener(this);
             gameMenu.g3.addActionListener(this);
             gameMenu.Back.addActionListener(this);
+            timer.start();
             frame.add(gameMenu);
             gameMenu.updateUI();
 
@@ -53,6 +69,10 @@ public class ViewController implements ActionListener {
         else if(obj == menu.OptionsButton){
             frame.remove(menu);
             options.Back.addActionListener(this);
+            options.black.addActionListener(this);
+            options.dGray.addActionListener(this);
+            options.gray.addActionListener(this);
+            options.white.addActionListener(this);
             frame.add(options);
             options.updateUI();
 
@@ -116,6 +136,18 @@ public class ViewController implements ActionListener {
             frame.add(menu);
             menu.updateUI();
         }
+        else if(obj == options.black){
+            changeBG(Color.black);
+        }
+        else if(obj == options.dGray){
+            changeBG(Color.darkGray);
+        }
+        else if(obj == options.gray){
+            changeBG(Color.gray);
+        }
+        else if(obj == options.white){
+            changeBG(Color.white);
+        }
 
         //Instructions ACTION LISTENER
         if(obj == instruc.Back){
@@ -137,10 +169,23 @@ public class ViewController implements ActionListener {
             gameMenu.updateUI();
         }
         //Game3 ACTION LISTENER
-        if(obj == g3.Back){
+        if(obj == g3.Back) {
             frame.remove(g3);
             frame.add(gameMenu);
             gameMenu.updateUI();
         }
+
     }
+
+    public void changeBG(Color bgColor){
+        menu.setBackground(bgColor);
+        credit.setBackground(bgColor);
+        g1.setBackground(bgColor);
+        g2.setBackground(bgColor);
+        g3.setBackground(bgColor);
+        gameMenu.setBackground(bgColor);
+        instruc.setBackground(bgColor);
+        options.setBackground(bgColor);
+    }
+
 }
