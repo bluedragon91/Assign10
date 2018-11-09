@@ -10,10 +10,11 @@ public class ViewController implements ActionListener {
 
 
     int time = 0;
+    int score = 0;
     Intro intro = new Intro();
     Menu menu = new Menu();
     MainFrame frame = new MainFrame();
-    GameMenu gameMenu = new GameMenu(time);
+    GameMenu gameMenu = new GameMenu(time, score);
     Options options = new Options();
     Credits credit = new Credits();
     Instructions instruc = new Instructions();
