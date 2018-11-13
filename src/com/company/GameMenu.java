@@ -33,7 +33,7 @@ public class GameMenu extends JPanel {
         super.paintComponent(g);
         g.setColor(Color.white);
         g.drawString("Your current time played is "  + time, 50, 475);
-        g.drawString("Your current score is: " + score, 50, 500);
+        g.drawString("Your current score is: " + score, 50, 490);
 
     }
 }

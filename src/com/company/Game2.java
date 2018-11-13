@@ -22,4 +22,8 @@ public class Game2 extends JPanel {
         g.drawString("Game2", 500, 300);
 
     }
+
+    public void setCharacter(int charNum){
+
+    }
 }

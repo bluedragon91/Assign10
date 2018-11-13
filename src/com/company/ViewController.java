@@ -70,10 +70,10 @@ public class ViewController implements ActionListener {
         else if(obj == menu.OptionsButton){
             frame.remove(menu);
             options.Back.addActionListener(this);
-            options.black.addActionListener(this);
-            options.dGray.addActionListener(this);
-            options.gray.addActionListener(this);
-            options.white.addActionListener(this);
+            options.row1.black.addActionListener(this);
+            options.row1.dGray.addActionListener(this);
+            options.row1.gray.addActionListener(this);
+            options.row1.white.addActionListener(this);
             frame.add(options);
             options.updateUI();
 
@@ -137,16 +137,16 @@ public class ViewController implements ActionListener {
             frame.add(menu);
             menu.updateUI();
         }
-        else if(obj == options.black){
+        else if(obj == options.row1.black){
             changeBG(Color.black);
         }
-        else if(obj == options.dGray){
+        else if(obj == options.row1.dGray){
             changeBG(Color.darkGray);
         }
-        else if(obj == options.gray){
+        else if(obj == options.row1.gray){
             changeBG(Color.gray);
         }
-        else if(obj == options.white){
+        else if(obj == options.row1.white){
             changeBG(Color.white);
         }
 
@@ -187,6 +187,12 @@ public class ViewController implements ActionListener {
         gameMenu.setBackground(bgColor);
         instruc.setBackground(bgColor);
         options.setBackground(bgColor);
+    }
+
+    public void setGameChar(int charNum){
+        g1.setCharacter(charNum);
+        g2.setCharacter(charNum);
+        g3.setCharacter(charNum);
     }
 
 }

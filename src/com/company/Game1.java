@@ -23,4 +23,8 @@ public class Game1 extends JPanel {
 
     }
 
+    public void setCharacter(int charNum){
+
+    }
+
 }
