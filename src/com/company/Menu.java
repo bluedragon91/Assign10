@@ -19,8 +19,6 @@ public class Menu extends JPanel {
         OptionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         InstructionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         Credits.setAlignmentX(Component.CENTER_ALIGNMENT);
-        GamesButton.setBackground(Color.LIGHT_GRAY);
-        GamesButton.setForeground(Color.LIGHT_GRAY);
 
         add(GamesButton);
         add(OptionsButton);

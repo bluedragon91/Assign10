@@ -5,24 +5,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class ViewController implements ActionListener {
+public class ViewController implements ActionListener, KeyListener {
 
 
     int time = 0;
     int score = 0;
+    Character player = new Character();
     Intro intro = new Intro();
     Menu menu = new Menu();
     MainFrame frame = new MainFrame();
-    GameMenu gameMenu = new GameMenu(time, score);
+    GameMenu gameMenu = new GameMenu(time, score, player);
     Options options = new Options();
     Credits credit = new Credits();
     Instructions instruc = new Instructions();
-    Game1 g1 = new Game1();
-    Game2 g2 = new Game2();
-    Game3 g3 = new Game3();
+    Game1 g1 = new Game1(player);
+    Game2 g2 = new Game2(player);
+    Game3 g3 = new Game3(player);
     Timer timer;
     int timerDelay = 1000;
+
 
 
     public ViewController() {
@@ -42,6 +46,9 @@ public class ViewController implements ActionListener {
         menu.Credits.addActionListener(this);
         menu.updateUI();
         timer = new Timer(timerDelay, this);
+        frame.setFocusable(true);
+
+
     }
 
     @Override
@@ -63,8 +70,11 @@ public class ViewController implements ActionListener {
             gameMenu.g3.addActionListener(this);
             gameMenu.Back.addActionListener(this);
             timer.start();
+            gameMenu.addKeyListener(this);
             frame.add(gameMenu);
             gameMenu.updateUI();
+            frame.addKeyListener(this);
+
 
         }
         else if(obj == menu.OptionsButton){
@@ -103,25 +113,15 @@ public class ViewController implements ActionListener {
 
         //GameMenu ACTION LISTENING
         if(obj == gameMenu.g1){
-            frame.remove(gameMenu);
-            g1.Back.addActionListener(this);
-            frame.add(g1);
 
-            g1.updateUI();
 
         }
         else if(obj == gameMenu.g2){
-            frame.remove(gameMenu);
-            frame.add(g2);
-            g2.Back.addActionListener(this);
-            g2.updateUI();
+
 
         }
         else if(obj == gameMenu.g3){
-            frame.remove(gameMenu);
-            frame.add(g3);
-            g3.Back.addActionListener(this);
-            g3.updateUI();
+
 
         }
         if(obj == gameMenu.Back){
@@ -195,4 +195,93 @@ public class ViewController implements ActionListener {
         g3.setCharacter(charNum);
     }
 
+    @Override
+    public void keyTyped(KeyEvent e){
+        if(e.getKeyChar() == 'w'){
+            player.moveUp();
+            gameMenu.repaint();
+            g1.repaint();
+            g2.repaint();
+            g3.repaint();
+            System.out.println("W");
+
+        }
+        if(e.getKeyChar() == 'a'){
+            player.moveLeft();
+            gameMenu.repaint();
+            g1.repaint();
+            g2.repaint();
+            g3.repaint();
+            System.out.println("A");
+        }
+        if(e.getKeyChar() == 's'){
+            player.moveDown();
+            gameMenu.repaint();
+            g1.repaint();
+            g2.repaint();
+            g3.repaint();
+            System.out.printf("S");
+        }
+        if (e.getKeyChar() == 'd'){
+            player.moveRight();
+            gameMenu.repaint();
+            g1.repaint();
+            g2.repaint();
+            g3.repaint();
+            System.out.println("D");
+        }
+        if((gameMenu.player.x >300 && gameMenu.player.x < 400)&&
+                (gameMenu.player.y >200 && gameMenu.player.y <250)){
+            loadG1();
+        }
+        if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
+                (gameMenu.player.y >150 && gameMenu.player.y <200)){
+            loadG2();
+        }
+        if((gameMenu.player.x >600 && gameMenu.player.x < 700)&&
+                (gameMenu.player.y >200 && gameMenu.player.y <250)){
+            loadG3();
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyChar() == 'w'){
+            System.out.println("press w");
+        }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e){
+
+    }
+
+    public void loadG1(){
+        frame.remove(gameMenu);
+        g1.Back.addActionListener(this);
+        g1.addKeyListener(this);
+        frame.add(g1);
+
+        g1.updateUI();
+        player.resetPos();
+    }
+    public void loadG2(){
+        frame.remove(gameMenu);
+        frame.add(g2);
+        g2.addKeyListener(this);
+        g2.Back.addActionListener(this);
+        g2.updateUI();
+        player.resetPos();
+    }
+    public void loadG3(){
+        frame.remove(gameMenu);
+        frame.add(g3);
+        g3.Back.addActionListener(this);
+        g3.addKeyListener(this);
+        g3.updateUI();
+        player.resetPos();
+    }
 }
+
+
