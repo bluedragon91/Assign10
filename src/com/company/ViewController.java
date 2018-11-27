@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
 
 public class ViewController implements ActionListener, KeyListener {
 
@@ -30,6 +29,8 @@ public class ViewController implements ActionListener, KeyListener {
     int g1delay = 300;
     int g1Time = 0;
     Timer g1timer = new Timer(g1delay, this);
+
+    int game1Ration = 0;
 
 
 
@@ -184,7 +185,7 @@ public class ViewController implements ActionListener, KeyListener {
         if(obj == g1timer){
             g1Time++;
             g1.seekPlayer();
-            if(g1Time > g1delay) {
+            if(g1delay+30 > g1Time) {
                 g1timer.setDelay(g1delay - g1Time);
             }
         }
@@ -248,10 +249,17 @@ public class ViewController implements ActionListener, KeyListener {
             g1timer.stop();
             player.setCurrentGame(0);
         }
-        if(player.currentGame == 1 && (g1.player.x +4 > g1.ration.x && g1.player.x -4 < g1.ration.x + 8) &&
-                (g1.player.y +4 > g1.ration.y && g1.player.y-4 < g1.ration.y + 8)){
+        if(player.currentGame == 1 && (g1.player.x +4 > g1.ration.x-8 && g1.player.x -4 < g1.ration.x + 8) &&
+                (g1.player.y +4 > g1.ration.y-8 && g1.player.y-4 < g1.ration.y + 8)){
             g1.newRation();
             score += 10;
+            game1Ration++;
+            if(game1Ration % 4 == 0){
+                g1.player.moveSpeed++;
+            }
+            if(game1Ration % 2 == 0){
+                g1.enemy.moveSpeed++;
+            }
         }
 
         //Game 2 Collision
@@ -306,7 +314,6 @@ public class ViewController implements ActionListener, KeyListener {
         g2.repaint();
         g3.repaint();
     }
-
     public void left(){
         player.moveLeft();
         gameMenu.repaint();
@@ -314,7 +321,6 @@ public class ViewController implements ActionListener, KeyListener {
         g2.repaint();
         g3.repaint();
     }
-
     public void down(){
         player.moveDown();
         gameMenu.repaint();
@@ -322,7 +328,6 @@ public class ViewController implements ActionListener, KeyListener {
         g2.repaint();
         g3.repaint();
     }
-
     public void right(){
         player.moveRight();
         gameMenu.repaint();
@@ -330,9 +335,6 @@ public class ViewController implements ActionListener, KeyListener {
         g2.repaint();
         g3.repaint();
     }
-
-
-
 }
 
 

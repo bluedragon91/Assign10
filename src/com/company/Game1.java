@@ -1,3 +1,5 @@
+//TODO Implement score
+//TODO Implement Game Over
 package com.company;
 
 import javax.swing.*;
@@ -9,6 +11,7 @@ public class Game1 extends JPanel {
     JButton Back;
     Character player, enemy, ration;
     Color playerColor;
+    int score =0;
     public Game1(Character player){
         super();
         enemy = new Character(5);
@@ -31,6 +34,7 @@ public class Game1 extends JPanel {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
         g.drawString("Game1", 500, 300);
+        g.drawString("Score: " + score, 20, 575);
         g.setColor(playerColor);
         g.drawRect(player.x, player.y, 10, 10);
         g.setColor(Color.RED);
@@ -65,6 +69,7 @@ public class Game1 extends JPanel {
         ration.y = (int)(Math.random()*590);
         enemy.moveSpeed++;
         repaint();
+        score += 10;
     }
 
 
