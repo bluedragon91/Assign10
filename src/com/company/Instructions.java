@@ -20,8 +20,7 @@ public class Instructions extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.white);
-        g.drawString("[Sorry no instructions yet my dood, we don't even have games yet]" , 50, 475);
-        g.drawString("[There'll be instructions here eventually... maybe]" , 50, 490);
+        g.drawString("Game 1: Avoid the zombie and collect as many rations as possible before you're caught!" , 450, 300);
 
 
     }

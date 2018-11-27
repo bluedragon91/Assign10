@@ -7,13 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 
 public class ViewController implements ActionListener, KeyListener {
 
 
     int time = 0;
     int score = 0;
-    Character player = new Character();
+    Character player = new Character(10);
     Intro intro = new Intro();
     Menu menu = new Menu();
     MainFrame frame = new MainFrame();
@@ -26,6 +27,10 @@ public class ViewController implements ActionListener, KeyListener {
     Game3 g3 = new Game3(player);
     Timer timer;
     int timerDelay = 1000;
+    int g1delay = 300;
+    int g1Time = 0;
+    Timer g1timer = new Timer(g1delay, this);
+
 
 
 
@@ -69,11 +74,16 @@ public class ViewController implements ActionListener, KeyListener {
             gameMenu.g2.addActionListener(this);
             gameMenu.g3.addActionListener(this);
             gameMenu.Back.addActionListener(this);
-            timer.start();
-            gameMenu.addKeyListener(this);
             frame.add(gameMenu);
             gameMenu.updateUI();
-            frame.addKeyListener(this);
+
+            //Prevents a bug where the user could exit to menu and go back to game and get a double speed character
+            if(time == 0) {
+                gameMenu.addKeyListener(this);
+                frame.addKeyListener(this);
+            }
+
+            timer.start();
 
 
         }
@@ -84,11 +94,16 @@ public class ViewController implements ActionListener, KeyListener {
             options.row1.dGray.addActionListener(this);
             options.row1.gray.addActionListener(this);
             options.row1.white.addActionListener(this);
+
+            options.row2.blue.addActionListener(this);
+            options.row2.black.addActionListener(this);
+            options.row2.white.addActionListener(this);
             frame.add(options);
             options.updateUI();
 
 
         }
+
         else if(obj == menu.InstructionButton){
             frame.remove(menu);
             instruc.Back.addActionListener(this);
@@ -111,26 +126,6 @@ public class ViewController implements ActionListener, KeyListener {
             menu.updateUI();
         }
 
-        //GameMenu ACTION LISTENING
-        if(obj == gameMenu.g1){
-
-
-        }
-        else if(obj == gameMenu.g2){
-
-
-        }
-        else if(obj == gameMenu.g3){
-
-
-        }
-        if(obj == gameMenu.Back){
-            frame.remove(gameMenu);
-            frame.add(menu);
-            menu.updateUI();
-        }
-
-
         //Option ACTION LISTENER
         if(obj == options.Back){
             frame.remove(options);
@@ -148,6 +143,15 @@ public class ViewController implements ActionListener, KeyListener {
         }
         else if(obj == options.row1.white){
             changeBG(Color.white);
+        }
+        else if(obj == options.row2.blue){
+            setGameChar(Color.blue);
+        }
+        else if(obj == options.row2.black){
+            setGameChar(Color.black);
+        }
+        else if(obj == options.row2.white){
+            setGameChar(Color.white);
         }
 
         //Instructions ACTION LISTENER
@@ -176,6 +180,15 @@ public class ViewController implements ActionListener, KeyListener {
             gameMenu.updateUI();
         }
 
+        //Game 1 Timer
+        if(obj == g1timer){
+            g1Time++;
+            g1.seekPlayer();
+            if(g1Time > g1delay) {
+                g1timer.setDelay(g1delay - g1Time);
+            }
+        }
+
     }
 
     public void changeBG(Color bgColor){
@@ -189,99 +202,137 @@ public class ViewController implements ActionListener, KeyListener {
         options.setBackground(bgColor);
     }
 
-    public void setGameChar(int charNum){
-        g1.setCharacter(charNum);
-        g2.setCharacter(charNum);
-        g3.setCharacter(charNum);
+    public void setGameChar(Color color){
+        g1.setCharacter(color);
+        g2.setCharacter(color);
+        g3.setCharacter(color);
+        gameMenu.setCharacter(color);
     }
 
     @Override
     public void keyTyped(KeyEvent e){
-        if(e.getKeyChar() == 'w'){
-            player.moveUp();
-            gameMenu.repaint();
-            g1.repaint();
-            g2.repaint();
-            g3.repaint();
-            System.out.println("W");
+        if(e.getKeyChar() == 'w'){ up(); }
+        if(e.getKeyChar() == 'a'){ left(); }
+        if(e.getKeyChar() == 's'){ down(); }
+        if(e.getKeyChar() == 'd'){ right(); }
 
-        }
-        if(e.getKeyChar() == 'a'){
-            player.moveLeft();
-            gameMenu.repaint();
-            g1.repaint();
-            g2.repaint();
-            g3.repaint();
-            System.out.println("A");
-        }
-        if(e.getKeyChar() == 's'){
-            player.moveDown();
-            gameMenu.repaint();
-            g1.repaint();
-            g2.repaint();
-            g3.repaint();
-            System.out.printf("S");
-        }
-        if (e.getKeyChar() == 'd'){
-            player.moveRight();
-            gameMenu.repaint();
-            g1.repaint();
-            g2.repaint();
-            g3.repaint();
-            System.out.println("D");
-        }
-        if((gameMenu.player.x >300 && gameMenu.player.x < 400)&&
+        //GameMenu button collision
+        if(player.currentGame == 0 && (gameMenu.player.x >300 && gameMenu.player.x < 400)&&
                 (gameMenu.player.y >200 && gameMenu.player.y <250)){
-            loadG1();
+            loadGame(g1);
+            player.setCurrentGame(1);
+            g1timer.restart();
         }
-        if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
+        if(player.currentGame == 0 && (gameMenu.player.x >450 && gameMenu.player.x < 550)&&
                 (gameMenu.player.y >150 && gameMenu.player.y <200)){
-            loadG2();
+            loadGame(g2);
+            player.setCurrentGame(2);
         }
-        if((gameMenu.player.x >600 && gameMenu.player.x < 700)&&
+        if(player.currentGame == 0 && (gameMenu.player.x >600 && gameMenu.player.x < 700)&&
                 (gameMenu.player.y >200 && gameMenu.player.y <250)){
-            loadG3();
+            loadGame(g3);
+            player.setCurrentGame(3);
         }
+        if(player.currentGame == 0 && (gameMenu.player.x >450 && gameMenu.player.x < 550)&&
+                (gameMenu.player.y >300 && gameMenu.player.y <350)){
+            frame.remove(gameMenu);
+            frame.add(menu);
+            menu.updateUI();
+        }
+
+
+        //Game 1 collision
+        if(player.currentGame == 1 && (g1.player.x >500 && g1.player.x < 600)&&
+                (g1.player.y >150 && g1.player.y <200)){
+            loadGameMenu(g1);
+            g1timer.stop();
+            player.setCurrentGame(0);
+        }
+        if(player.currentGame == 1 && (g1.player.x +4 > g1.ration.x && g1.player.x -4 < g1.ration.x + 8) &&
+                (g1.player.y +4 > g1.ration.y && g1.player.y-4 < g1.ration.y + 8)){
+            g1.newRation();
+            score += 10;
+        }
+
+        //Game 2 Collision
+        if(player.currentGame == 2 && (g2.player.x >500 && g2.player.x < 600)&&
+                (g2.player.y >150 && g2.player.y <200)){
+            loadGameMenu(g2);
+            player.setCurrentGame(0);
+        }
+
+        //Game 3 Collision
+        if(player.currentGame == 3 && (g3.player.x >500 && g3.player.x < 600)&&
+                (g3.player.y >150 && g3.player.y <200)){
+            loadGameMenu(g3);
+            player.setCurrentGame(0);
+            frame.remove(g3);
+        }
+
     }
 
     @Override
     public void keyPressed(KeyEvent e){
-        if(e.getKeyChar() == 'w'){
-            System.out.println("press w");
-        }
-
+        if(e.getKeyCode() == KeyEvent.VK_UP){ up(); }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){ left(); }
+        if(e.getKeyCode() == KeyEvent.VK_DOWN){ down(); }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT){ right(); }
     }
-
     @Override
     public void keyReleased(KeyEvent e){
 
     }
 
-    public void loadG1(){
+    public void loadGame(JPanel game){
         frame.remove(gameMenu);
-        g1.Back.addActionListener(this);
-        g1.addKeyListener(this);
-        frame.add(g1);
+        frame.add(game);
+        game.addKeyListener(this);
+        game.updateUI();
+        player.resetPos();
+    }
 
-        g1.updateUI();
+    public void loadGameMenu(JPanel game){
+        frame.remove(game);
+        gameMenu.Back.addActionListener(this);
+        frame.add(gameMenu);
+        gameMenu.updateUI();
         player.resetPos();
     }
-    public void loadG2(){
-        frame.remove(gameMenu);
-        frame.add(g2);
-        g2.addKeyListener(this);
-        g2.Back.addActionListener(this);
-        g2.updateUI();
-        player.resetPos();
+
+    public void up(){
+        player.moveUp();
+        gameMenu.repaint();
+        g1.repaint();
+        g2.repaint();
+        g3.repaint();
     }
-    public void loadG3(){
-        frame.remove(gameMenu);
-        frame.add(g3);
-        g3.Back.addActionListener(this);
-        g3.addKeyListener(this);
-        g3.updateUI();
-        player.resetPos();
+
+    public void left(){
+        player.moveLeft();
+        gameMenu.repaint();
+        g1.repaint();
+        g2.repaint();
+        g3.repaint();
     }
+
+    public void down(){
+        player.moveDown();
+        gameMenu.repaint();
+        g1.repaint();
+        g2.repaint();
+        g3.repaint();
+    }
+
+    public void right(){
+        player.moveRight();
+        gameMenu.repaint();
+        g1.repaint();
+        g2.repaint();
+        g3.repaint();
+    }
+
+
+
 }
 
 

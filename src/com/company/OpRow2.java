@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class OpRow2 extends JPanel {
-    JRadioButton char1;
-    JRadioButton char2;
-    JRadioButton char3;
+    JRadioButton blue;
+    JRadioButton white;
+    JRadioButton black;
 
     public OpRow2(){
         super();
@@ -15,17 +15,17 @@ public class OpRow2 extends JPanel {
         ButtonGroup charGroup = new ButtonGroup();
 
 
-        char1 = new JRadioButton("Character 1");
-        char2 = new JRadioButton("Character 2");
-        char3 = new JRadioButton("Character 3");
+        blue = new JRadioButton("Blue");
+        white = new JRadioButton("White");
+        black = new JRadioButton("Black");
 
-        charGroup.add(char1);
-        charGroup.add(char2);
-        charGroup.add(char3);
+        charGroup.add(blue);
+        charGroup.add(white);
+        charGroup.add(black);
 
-        add(char1);
-        add(char2);
-        add(char3);
+        add(blue);
+        add(white);
+        add(black);
 
 
     }

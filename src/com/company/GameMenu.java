@@ -10,6 +10,7 @@ public class GameMenu extends JPanel {
     int time;
     int score;
     Character player;
+    Color playerColor;
     public GameMenu(int time, int score,Character player){
         super();
         this.player = player;
@@ -24,7 +25,8 @@ public class GameMenu extends JPanel {
 
         g1.setBounds(300, 200, 100, 50);
         g2.setBounds(450, 150, 100, 50);
-        g3. setBounds(600, 200, 100 , 50);
+        g3.setBounds(600, 200, 100 , 50);
+        Back.setBounds(450, 300, 100, 50);
         add(g1);
         add(g2);
         add(g3);
@@ -39,6 +41,11 @@ public class GameMenu extends JPanel {
         g.setColor(Color.white);
         g.drawString("Your current time played is "  + time, 50, 475);
         g.drawString("Your current score is: " + score, 50, 490);
+        g.setColor(playerColor);
         g.drawRect(player.x, player.y, 10, 10);
+    }
+
+    public void setCharacter(Color color){
+        playerColor = color;
     }
 }
