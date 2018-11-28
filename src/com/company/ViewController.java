@@ -95,14 +95,11 @@ public class ViewController implements ActionListener, KeyListener {
             options.row1.dGray.addActionListener(this);
             options.row1.gray.addActionListener(this);
             options.row1.white.addActionListener(this);
-
             options.row2.blue.addActionListener(this);
             options.row2.black.addActionListener(this);
             options.row2.white.addActionListener(this);
             frame.add(options);
             options.updateUI();
-
-
         }
 
         else if(obj == menu.InstructionButton){
@@ -185,7 +182,8 @@ public class ViewController implements ActionListener, KeyListener {
         if(obj == g1timer){
             g1Time++;
             g1.seekPlayer();
-            if(g1delay+30 > g1Time) {
+            //TODO Make it so that timer doesn't break
+            if(g1Time+30 > g1Time) {
                 g1timer.setDelay(g1delay - g1Time);
             }
         }
@@ -216,66 +214,7 @@ public class ViewController implements ActionListener, KeyListener {
         if(e.getKeyChar() == 'a'){ left(); }
         if(e.getKeyChar() == 's'){ down(); }
         if(e.getKeyChar() == 'd'){ right(); }
-
-        //GameMenu button collision
-        if(player.currentGame == 0 && (gameMenu.player.x >300 && gameMenu.player.x < 400)&&
-                (gameMenu.player.y >200 && gameMenu.player.y <250)){
-            loadGame(g1);
-            player.setCurrentGame(1);
-            g1timer.restart();
-        }
-        if(player.currentGame == 0 && (gameMenu.player.x >450 && gameMenu.player.x < 550)&&
-                (gameMenu.player.y >150 && gameMenu.player.y <200)){
-            loadGame(g2);
-            player.setCurrentGame(2);
-        }
-        if(player.currentGame == 0 && (gameMenu.player.x >600 && gameMenu.player.x < 700)&&
-                (gameMenu.player.y >200 && gameMenu.player.y <250)){
-            loadGame(g3);
-            player.setCurrentGame(3);
-        }
-        if(player.currentGame == 0 && (gameMenu.player.x >450 && gameMenu.player.x < 550)&&
-                (gameMenu.player.y >300 && gameMenu.player.y <350)){
-            frame.remove(gameMenu);
-            frame.add(menu);
-            menu.updateUI();
-        }
-
-
-        //Game 1 collision
-        if(player.currentGame == 1 && (g1.player.x >500 && g1.player.x < 600)&&
-                (g1.player.y >150 && g1.player.y <200)){
-            loadGameMenu(g1);
-            g1timer.stop();
-            player.setCurrentGame(0);
-        }
-        if(player.currentGame == 1 && (g1.player.x +4 > g1.ration.x-8 && g1.player.x -4 < g1.ration.x + 8) &&
-                (g1.player.y +4 > g1.ration.y-8 && g1.player.y-4 < g1.ration.y + 8)){
-            g1.newRation();
-            score += 10;
-            game1Ration++;
-            if(game1Ration % 4 == 0){
-                g1.player.moveSpeed++;
-            }
-            if(game1Ration % 2 == 0){
-                g1.enemy.moveSpeed++;
-            }
-        }
-
-        //Game 2 Collision
-        if(player.currentGame == 2 && (g2.player.x >500 && g2.player.x < 600)&&
-                (g2.player.y >150 && g2.player.y <200)){
-            loadGameMenu(g2);
-            player.setCurrentGame(0);
-        }
-
-        //Game 3 Collision
-        if(player.currentGame == 3 && (g3.player.x >500 && g3.player.x < 600)&&
-                (g3.player.y >150 && g3.player.y <200)){
-            loadGameMenu(g3);
-            player.setCurrentGame(0);
-            frame.remove(g3);
-        }
+        collisionCheck();
 
     }
 
@@ -285,10 +224,10 @@ public class ViewController implements ActionListener, KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_LEFT){ left(); }
         if(e.getKeyCode() == KeyEvent.VK_DOWN){ down(); }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT){ right(); }
+        collisionCheck();
     }
     @Override
     public void keyReleased(KeyEvent e){
-
     }
 
     public void loadGame(JPanel game){
@@ -334,6 +273,91 @@ public class ViewController implements ActionListener, KeyListener {
         g1.repaint();
         g2.repaint();
         g3.repaint();
+    }
+
+    public void collisionCheck(){
+        switch(player.currentGame){
+            case 0:
+                game0Collision();
+                break;
+            case 1:
+                game1Collision();
+                break;
+            case 2:
+                game2Collision();
+                break;
+            case 3:
+                game3Collision();
+                break;
+        }
+
+    }
+
+    //GameMenu button collision
+    public void game0Collision(){
+        if((gameMenu.player.x >300 && gameMenu.player.x < 400)&&
+                (gameMenu.player.y >200 && gameMenu.player.y <250)){
+            loadGame(g1);
+            player.setCurrentGame(1);
+            g1timer.restart();
+        }
+        if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
+                (gameMenu.player.y >150 && gameMenu.player.y <200)){
+            loadGame(g2);
+            player.setCurrentGame(2);
+        }
+        if((gameMenu.player.x >600 && gameMenu.player.x < 700)&&
+                (gameMenu.player.y >200 && gameMenu.player.y <250)){
+            loadGame(g3);
+            player.setCurrentGame(3);
+        }
+        if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
+                (gameMenu.player.y >300 && gameMenu.player.y <350)){
+            frame.remove(gameMenu);
+            frame.add(menu);
+            menu.updateUI();
+        }
+    }
+
+    //Game 1 collision
+    public void game1Collision(){
+        if((g1.player.x >500 && g1.player.x < 600)&&
+                (g1.player.y >150 && g1.player.y <200)){
+            loadGameMenu(g1);
+            g1timer.stop();
+            player.setCurrentGame(0);
+        }
+        if((g1.player.x +4 > g1.ration.x-8 && g1.player.x -4 < g1.ration.x + 8) &&
+                (g1.player.y +4 > g1.ration.y-8 && g1.player.y-4 < g1.ration.y + 8)){
+            g1.newRation();
+            score += 10;
+            game1Ration++;
+            if(game1Ration % 4 == 0){
+                g1.player.moveSpeed++;
+            }
+            if(game1Ration % 2 == 0){
+                g1.enemy.moveSpeed++;
+            }
+        }
+    }
+
+    //Game 2 Collision
+    public void game2Collision(){
+        if((g2.player.x >500 && g2.player.x < 600)&&
+                (g2.player.y >150 && g2.player.y <200)){
+            loadGameMenu(g2);
+            player.setCurrentGame(0);
+        }
+    }
+
+    //Game 3 Collision
+    public void game3Collision(){
+        if((g3.player.x >500 && g3.player.x < 600)&&
+                (g3.player.y >150 && g3.player.y <200)){
+            loadGameMenu(g3);
+            player.setCurrentGame(0);
+            frame.remove(g3);
+        }
     }
 }
 

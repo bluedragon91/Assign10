@@ -11,11 +11,8 @@ public class Instructions extends JPanel {
         super();
         setBackground(Color.darkGray);
         Back = new JButton("Back");
-
         add(Back);
-
     }
-
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
