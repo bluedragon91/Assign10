@@ -27,10 +27,12 @@ public class ViewController implements ActionListener, KeyListener {
     Timer timer;
     int timerDelay = 1000;
     int g1delay = 300;
-    int g1Time = 0;
-    Timer g1timer = new Timer(g1delay, this);
-
+    int gameTime = 0;
+    Timer gameTimer = new Timer(g1delay, this);
     int game1Ration = 0;
+    int game2Ration = 0;
+    int game3Ration = 0;
+    GameOver overScreen = new GameOver(score);
 
 
 
@@ -39,7 +41,7 @@ public class ViewController implements ActionListener, KeyListener {
         frame.add(intro);
         intro.updateUI();
         try {
-            Thread.sleep(4000);
+            Thread.sleep(3500);
         }
         catch(Exception e){
             System.out.println("I have no idea if this will work and If you're here that's a no");
@@ -178,13 +180,22 @@ public class ViewController implements ActionListener, KeyListener {
             gameMenu.updateUI();
         }
 
-        //Game 1 Timer
-        if(obj == g1timer){
-            g1Time++;
-            g1.seekPlayer();
-            //TODO Make it so that timer doesn't break
-            if(g1Time+30 > g1Time) {
-                g1timer.setDelay(g1delay - g1Time);
+        //Game Timer
+        if(obj == gameTimer){
+            switch(player.currentGame){
+                case 1:
+                    g1.seekPlayer();
+                    break;
+                case 2:
+                    g2.seekPlayer();
+                    break;
+                case 3:
+                    g3.seekPlayer();
+                    break;
+            }
+            gameTime++;
+            if(g1delay > gameTime) {
+                gameTimer.setDelay(g1delay - gameTime);
             }
         }
 
@@ -199,6 +210,7 @@ public class ViewController implements ActionListener, KeyListener {
         gameMenu.setBackground(bgColor);
         instruc.setBackground(bgColor);
         options.setBackground(bgColor);
+        overScreen.setBackground(bgColor);
     }
 
     public void setGameChar(Color color){
@@ -244,6 +256,7 @@ public class ViewController implements ActionListener, KeyListener {
         frame.add(gameMenu);
         gameMenu.updateUI();
         player.resetPos();
+        player.currentGame = 0;
     }
 
     public void up(){
@@ -290,7 +303,6 @@ public class ViewController implements ActionListener, KeyListener {
                 game3Collision();
                 break;
         }
-
     }
 
     //GameMenu button collision
@@ -299,17 +311,31 @@ public class ViewController implements ActionListener, KeyListener {
                 (gameMenu.player.y >200 && gameMenu.player.y <250)){
             loadGame(g1);
             player.setCurrentGame(1);
-            g1timer.restart();
+            gameTimer.restart();
+            g1delay = 300;
+            gameTimer.setDelay(g1delay);
+            g1.enemy.x = 0;
+            g1.enemy.y = 0;
         }
         if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
                 (gameMenu.player.y >150 && gameMenu.player.y <200)){
             loadGame(g2);
             player.setCurrentGame(2);
+            gameTimer.restart();
+            g1delay = 300;
+            gameTimer.setDelay(g1delay);
+            g1.enemy.x = 0;
+            g1.enemy.y = 0;
         }
         if((gameMenu.player.x >600 && gameMenu.player.x < 700)&&
                 (gameMenu.player.y >200 && gameMenu.player.y <250)){
             loadGame(g3);
             player.setCurrentGame(3);
+            gameTimer.restart();
+            g1delay = 300;
+            gameTimer.setDelay(g1delay);
+            g1.enemy.x = 0;
+            g1.enemy.y = 0;
         }
         if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
                 (gameMenu.player.y >300 && gameMenu.player.y <350)){
@@ -324,11 +350,11 @@ public class ViewController implements ActionListener, KeyListener {
         if((g1.player.x >500 && g1.player.x < 600)&&
                 (g1.player.y >150 && g1.player.y <200)){
             loadGameMenu(g1);
-            g1timer.stop();
+            gameTimer.stop();
             player.setCurrentGame(0);
         }
-        if((g1.player.x +4 > g1.ration.x-8 && g1.player.x -4 < g1.ration.x + 8) &&
-                (g1.player.y +4 > g1.ration.y-8 && g1.player.y-4 < g1.ration.y + 8)){
+        if((g1.player.x +14 > g1.ration.x-8 && g1.player.x -4 < g1.ration.x + 8) &&
+                (g1.player.y +14 > g1.ration.y-8 && g1.player.y-4 < g1.ration.y + 8)){
             g1.newRation();
             score += 10;
             game1Ration++;
@@ -339,6 +365,11 @@ public class ViewController implements ActionListener, KeyListener {
                 g1.enemy.moveSpeed++;
             }
         }
+        if((g1.player.x +14 > g1.enemy.x-8 && g1.player.x -4 < g1.enemy.x + 8) &&
+                (g1.player.y +14 > g1.enemy.y-8 && g1.player.y-4 < g1.enemy.y + 8)){
+            gameOver(g1);
+            g1.score = 0;
+        }
     }
 
     //Game 2 Collision
@@ -346,7 +377,27 @@ public class ViewController implements ActionListener, KeyListener {
         if((g2.player.x >500 && g2.player.x < 600)&&
                 (g2.player.y >150 && g2.player.y <200)){
             loadGameMenu(g2);
+            gameTimer.stop();
             player.setCurrentGame(0);
+        }
+        if((g2.player.x +15 > g2.ration.x-8 && g2.player.x -4 < g2.ration.x + 8) &&
+                (g2.player.y +14 > g2.ration.y-8 && g2.player.y-4 < g2.ration.y + 8)){
+            g2.newRation();
+            score += 10;
+            game2Ration++;
+            if(game2Ration % 4 == 0){
+                g2.player.moveSpeed++;
+            }
+            if(game2Ration % 2 == 0){
+                g2.enemy1.moveSpeed++;
+            }
+        }
+        if(((g2.player.x +14 > g2.enemy1.x-8 && g2.player.x -4 < g2.enemy1.x + 8) &&
+                (g2.player.y +14 > g2.enemy1.y-8 && g2.player.y-4 < g2.enemy1.y + 8))
+                ||((g2.player.x +14 > g2.enemy2.x-8 && g2.player.x -4 < g2.enemy2.x + 8) &&
+                (g2.player.y +14 > g2.enemy2.y-8 && g2.player.y-4 < g2.enemy2.y + 8))){
+            gameOver(g2);
+            g2.score = 0;
         }
     }
 
@@ -355,10 +406,46 @@ public class ViewController implements ActionListener, KeyListener {
         if((g3.player.x >500 && g3.player.x < 600)&&
                 (g3.player.y >150 && g3.player.y <200)){
             loadGameMenu(g3);
+            gameTimer.stop();
             player.setCurrentGame(0);
-            frame.remove(g3);
+        }
+        if((g3.player.x +15 > g3.ration.x-8 && g3.player.x -4 < g3.ration.x + 8) &&
+                (g3.player.y +14 > g3.ration.y-8 && g3.player.y-4 < g3.ration.y + 8)){
+            g3.newRation();
+            score += 10;
+            game3Ration++;
+            if(game3Ration % 4 == 0){
+                g3.player.moveSpeed+=2;
+            }
+            if(game2Ration % 2 == 0){
+                g3.enemy1.moveSpeed++;
+                g3.enemy2.moveSpeed++;
+                g3.enemy3.moveSpeed+=2;
+            }
+        }
+        if(((g3.player.x +14 > g3.enemy1.x-8 && g3.player.x -4 < g3.enemy1.x + 8) &&
+                (g3.player.y +14 > g3.enemy1.y-8 && g3.player.y-4 < g3.enemy1.y + 8))
+                ||((g3.player.x +14 > g3.enemy2.x-8 && g3.player.x -4 < g3.enemy2.x + 8) &&
+                (g3.player.y +14 > g3.enemy2.y-8 && g3.player.y-4 < g3.enemy2.y + 8))
+                ||((g3.player.x +14 > g3.enemy3.x-8 && g3.player.x -4 < g3.enemy3.x + 8) &&
+                (g3.player.y +14 > g3.enemy3.y-8 && g3.player.y-4 < g3.enemy3.y + 8))){
+            gameOver(g3);
+            g3.score = 0;
         }
     }
+
+    public void gameOver(JPanel game){
+        frame.remove(game);
+        game.updateUI();
+        frame.add(overScreen);
+        gameMenu.score = score;
+        overScreen.updateUI();
+        try{
+            Thread.sleep(2500);
+        }
+        catch(Exception e){
+            System.out.println("I have no idea if this will work and If you're here that's a no");
+        }
+        loadGameMenu(overScreen);
+    }
 }
-
-
