@@ -7,16 +7,16 @@ import java.awt.*;
 
 
 public class Game1 extends JPanel {
-
+    int game = 1;
     JButton Back;
-    Character player, enemy, ration;
+    Character player, enemy1, ration;
     Color playerColor;
     int score =0;
     public Game1(Character player){
         super();
-        enemy = new Character(5);
-        enemy.x = 0;
-        enemy.y = 0;
+        enemy1 = new Character(5);
+        enemy1.x = 0;
+        enemy1.y = 0;
         this.player = player;
         ration = new Character(0);
         ration.x = 560;
@@ -33,12 +33,12 @@ public class Game1 extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.WHITE);
-        g.drawString("Game1", 500, 300);
+        g.drawString("Game" + game, 500, 300);
         g.drawString("Score: " + score, 20, 575);
         g.setColor(playerColor);
         g.drawRect(player.x, player.y, 10, 10);
         g.setColor(Color.RED);
-        g.drawRect(enemy.x, enemy.y, 10, 10);
+        g.drawRect(enemy1.x, enemy1.y, 10, 10);
         g.setColor(Color.YELLOW);
         g.drawRect(ration.x, ration.y, 8, 8);
 
@@ -49,17 +49,17 @@ public class Game1 extends JPanel {
     }
 
     public void seekPlayer(){
-        if(player.x > enemy.x){
-            enemy.moveRight();
+        if(player.x > enemy1.x){
+            enemy1.moveRight();
         }
-        else if(player.x < enemy.x){
-            enemy.moveLeft();
+        else if(player.x < enemy1.x){
+            enemy1.moveLeft();
         }
-        if(player.y > enemy.y){
-            enemy.moveDown();
+        if(player.y > enemy1.y){
+            enemy1.moveDown();
         }
-        else if(player.y < enemy.y){
-            enemy.moveUp();
+        else if(player.y < enemy1.y){
+            enemy1.moveUp();
         }
         repaint();
     }
@@ -67,7 +67,7 @@ public class Game1 extends JPanel {
     public void newRation(){
         ration.x = (int)(Math.random()*1190);
         ration.y = (int)(Math.random()*590);
-        enemy.moveSpeed++;
+        enemy1.moveSpeed++;
         repaint();
         score += 10;
     }

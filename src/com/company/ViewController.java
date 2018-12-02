@@ -73,9 +73,6 @@ public class ViewController implements ActionListener, KeyListener {
         //MENU ACTION LISTENING
         if(obj == menu.GamesButton){
             frame.remove(menu);
-            gameMenu.g1.addActionListener(this);
-            gameMenu.g2.addActionListener(this);
-            gameMenu.g3.addActionListener(this);
             gameMenu.Back.addActionListener(this);
             frame.add(gameMenu);
             gameMenu.updateUI();
@@ -161,24 +158,6 @@ public class ViewController implements ActionListener, KeyListener {
             menu.updateUI();
         }
 
-        //Game1 ACTION LISTENER
-        if(obj == g1.Back){
-            frame.remove(g1);
-            frame.add(gameMenu);
-            gameMenu.updateUI();
-        }
-        //Game2 ACTION LISTENER
-        if(obj == g2.Back){
-            frame.remove(g2);
-            frame.add(gameMenu);
-            gameMenu.updateUI();
-        }
-        //Game3 ACTION LISTENER
-        if(obj == g3.Back) {
-            frame.remove(g3);
-            frame.add(gameMenu);
-            gameMenu.updateUI();
-        }
 
         //Game Timer
         if(obj == gameTimer){
@@ -336,8 +315,8 @@ public class ViewController implements ActionListener, KeyListener {
             gameTimer.restart();
             g1delay = 300;
             gameTimer.setDelay(g1delay);
-            g1.enemy.x = 0;
-            g1.enemy.y = 0;
+            g1.enemy1.x = 0;
+            g1.enemy1.y = 0;
         }
         if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
                 (gameMenu.player.y >150 && gameMenu.player.y <200)){
@@ -363,11 +342,12 @@ public class ViewController implements ActionListener, KeyListener {
             g3.enemy1.y = 0;
             g3.enemy2.x = 1199;
             g3.enemy2.y = 0;
-            g3.enemy2.x = 599;
-            g3.enemy2.y = 0;
+            g3.enemy3.x = 599;
+            g3.enemy3.y = 0;
         }
         if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
                 (gameMenu.player.y >300 && gameMenu.player.y <350)){
+            gameTimer.stop();
             frame.remove(gameMenu);
             frame.add(menu);
             menu.updateUI();
@@ -391,11 +371,11 @@ public class ViewController implements ActionListener, KeyListener {
                 g1.player.moveSpeed++;
             }
             if(game1Ration % 2 == 0){
-                g1.enemy.moveSpeed++;
+                g1.enemy1.moveSpeed++;
             }
         }
-        if((g1.player.x +14 > g1.enemy.x-8 && g1.player.x -4 < g1.enemy.x + 8) &&
-                (g1.player.y +14 > g1.enemy.y-8 && g1.player.y-4 < g1.enemy.y + 8)){
+        if((g1.player.x +14 > g1.enemy1.x-8 && g1.player.x -4 < g1.enemy1.x + 8) &&
+                (g1.player.y +14 > g1.enemy1.y-8 && g1.player.y-4 < g1.enemy1.y + 8)){
             gameOver(g1);
             g1.score = 0;
         }
@@ -446,7 +426,7 @@ public class ViewController implements ActionListener, KeyListener {
             if(game3Ration % 4 == 0){
                 g3.player.moveSpeed+=2;
             }
-            if(game2Ration % 2 == 0){
+            if(game3Ration % 2 == 0){
                 g3.enemy1.moveSpeed++;
                 g3.enemy2.moveSpeed++;
                 g3.enemy3.moveSpeed+=2;
