@@ -34,7 +34,7 @@ public class Game1 extends JPanel {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
         g.drawString("Game" + game, 500, 300);
-        g.drawString("Score: " + score, 20, 575);
+        g.drawString("Score: " + score, 20, 555);
         g.setColor(playerColor);
         g.drawRect(player.x, player.y, 10, 10);
         g.setColor(Color.RED);
