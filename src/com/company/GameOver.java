@@ -3,22 +3,19 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameOver extends JPanel {
-
+public class GameOver extends JPanel{
     int score;
     public GameOver(int score){
         super();
-        setLayout(null);
-        setBackground(Color.darkGray);
+        this.setBackground(Color.darkGray);
         this.score = score;
-
     }
 
     @Override
-    protected void printComponent(Graphics g) {
-        super.printComponent(g);
-        g.setColor(Color.WHITE);
-        g.drawString("Game Over", 500, 400);
-        g.drawString("Your score was: " + score, 500, 450);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.white);
+        g.drawString("Game Over", 500, 300);
+        g.drawString("Your score was: " + score, 500, 350);
     }
 }

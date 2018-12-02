@@ -194,9 +194,11 @@ public class ViewController implements ActionListener, KeyListener {
                     break;
             }
             gameTime++;
+            System.out.println("Game Time: " + gameTime);
             if(g1delay > gameTime) {
                 gameTimer.setDelay(g1delay - gameTime);
             }
+            collisionCheck();
         }
 
     }
@@ -257,6 +259,26 @@ public class ViewController implements ActionListener, KeyListener {
         gameMenu.updateUI();
         player.resetPos();
         player.currentGame = 0;
+    }
+
+    public void gameOver(JPanel game){
+        frame.remove(game);
+        frame.add(overScreen);
+        overScreen.updateUI();
+        overScreen.score = score;
+        overScreen.repaint();
+
+
+        gameTimer.setDelay(1000);
+        //Uses gameTimer to pause game on the game over screen for 5 seconds
+        if(gameTime >7){
+            gameTime  =0;
+        }
+        gameTimer.start();
+        if(!(gameTime < 5)) {
+            gameMenu.score = score;
+            loadGameMenu(overScreen);
+        }
     }
 
     public void up(){
@@ -324,8 +346,11 @@ public class ViewController implements ActionListener, KeyListener {
             gameTimer.restart();
             g1delay = 300;
             gameTimer.setDelay(g1delay);
-            g1.enemy.x = 0;
-            g1.enemy.y = 0;
+            g2.enemy1.x = 0;
+            g2.enemy1.y = 0;
+            g2.enemy2.x = 1199;
+            g2.enemy2.y = 0;
+
         }
         if((gameMenu.player.x >600 && gameMenu.player.x < 700)&&
                 (gameMenu.player.y >200 && gameMenu.player.y <250)){
@@ -334,8 +359,12 @@ public class ViewController implements ActionListener, KeyListener {
             gameTimer.restart();
             g1delay = 300;
             gameTimer.setDelay(g1delay);
-            g1.enemy.x = 0;
-            g1.enemy.y = 0;
+            g3.enemy1.x = 0;
+            g3.enemy1.y = 0;
+            g3.enemy2.x = 1199;
+            g3.enemy2.y = 0;
+            g3.enemy2.x = 599;
+            g3.enemy2.y = 0;
         }
         if((gameMenu.player.x >450 && gameMenu.player.x < 550)&&
                 (gameMenu.player.y >300 && gameMenu.player.y <350)){
@@ -434,18 +463,5 @@ public class ViewController implements ActionListener, KeyListener {
         }
     }
 
-    public void gameOver(JPanel game){
-        frame.remove(game);
-        game.updateUI();
-        frame.add(overScreen);
-        gameMenu.score = score;
-        overScreen.updateUI();
-        try{
-            Thread.sleep(2500);
-        }
-        catch(Exception e){
-            System.out.println("I have no idea if this will work and If you're here that's a no");
-        }
-        loadGameMenu(overScreen);
-    }
+
 }
