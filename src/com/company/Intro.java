@@ -8,6 +8,7 @@ public class Intro extends JPanel{
         super();
         this.setBackground(Color.darkGray);
 
+
     }
 
     @Override

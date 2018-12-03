@@ -13,6 +13,7 @@ public class Credits extends JPanel {
         Back = new JButton("Back");
         Back.setBounds(500, 500, 75, 50);
         add(Back);
+
     }
     @Override
     public void paintComponent(Graphics g){

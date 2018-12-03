@@ -15,6 +15,7 @@ public class Game3 extends Game2 {
         game =3;
     }
 
+
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);

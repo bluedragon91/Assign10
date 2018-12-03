@@ -20,5 +20,6 @@ public class Instructions extends JPanel {
         g.drawString("Game 1: Avoid the zombie and collect as many rations as possible before you're caught!" , 450, 300);
 
 
+
     }
 }

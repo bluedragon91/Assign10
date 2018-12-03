@@ -11,6 +11,7 @@ public class GameOver extends JPanel{
         this.score = score;
     }
 
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

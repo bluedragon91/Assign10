@@ -25,6 +25,5 @@ public class Menu extends JPanel {
         add(InstructionButton);
         add(Credits);
 
-
     }
 }

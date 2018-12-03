@@ -23,6 +23,7 @@ public class GameMenu extends JPanel {
         g3 = new JButton("Game 3");
         Back = new JButton("Back");
 
+
         g1.setBounds(300, 200, 100, 50);
         g2.setBounds(450, 150, 100, 50);
         g3.setBounds(600, 200, 100 , 50);

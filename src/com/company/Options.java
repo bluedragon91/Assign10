@@ -20,7 +20,6 @@ public class Options extends JPanel {
         row2.setBounds(350, 100, 500, 75);
 
         Back = new JButton("Back");
-
         Back.setBounds(575,500, 75, 50);
         add(row1);
         add(row2);

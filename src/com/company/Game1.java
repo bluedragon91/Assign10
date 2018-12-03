@@ -1,11 +1,6 @@
-//TODO Implement score
-//TODO Implement Game Over
 package com.company;
-
 import javax.swing.*;
 import java.awt.*;
-
-
 public class Game1 extends JPanel {
     int game = 1;
     JButton Back;

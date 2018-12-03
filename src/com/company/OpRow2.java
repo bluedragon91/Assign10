@@ -11,7 +11,6 @@ public class OpRow2 extends JPanel {
     public OpRow2(){
         super();
         setBackground(Color.gray);
-
         ButtonGroup charGroup = new ButtonGroup();
 
 

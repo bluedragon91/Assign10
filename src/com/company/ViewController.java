@@ -327,7 +327,7 @@ public class ViewController implements ActionListener, KeyListener {
             gameTimer.setDelay(g1delay);
             g2.enemy1.x = 0;
             g2.enemy1.y = 0;
-            g2.enemy2.x = 1199;
+            g2.enemy2.x = 1160;
             g2.enemy2.y = 0;
 
         }
@@ -364,15 +364,7 @@ public class ViewController implements ActionListener, KeyListener {
         }
         if((g1.player.x +14 > g1.ration.x-8 && g1.player.x -4 < g1.ration.x + 8) &&
                 (g1.player.y +14 > g1.ration.y-8 && g1.player.y-4 < g1.ration.y + 8)){
-            g1.newRation();
-            score += 10;
-            game1Ration++;
-            if(game1Ration % 4 == 0){
-                g1.player.moveSpeed++;
-            }
-            if(game1Ration % 2 == 0){
-                g1.enemy1.moveSpeed++;
-            }
+            collectRation(g1, game1Ration);
         }
         if((g1.player.x +14 > g1.enemy1.x-8 && g1.player.x -4 < g1.enemy1.x + 8) &&
                 (g1.player.y +14 > g1.enemy1.y-8 && g1.player.y-4 < g1.enemy1.y + 8)){
@@ -391,15 +383,7 @@ public class ViewController implements ActionListener, KeyListener {
         }
         if((g2.player.x +15 > g2.ration.x-8 && g2.player.x -4 < g2.ration.x + 8) &&
                 (g2.player.y +14 > g2.ration.y-8 && g2.player.y-4 < g2.ration.y + 8)){
-            g2.newRation();
-            score += 10;
-            game2Ration++;
-            if(game2Ration % 4 == 0){
-                g2.player.moveSpeed++;
-            }
-            if(game2Ration % 2 == 0){
-                g2.enemy1.moveSpeed++;
-            }
+            collectRation(g2, game2Ration);
         }
         if(((g2.player.x +14 > g2.enemy1.x-8 && g2.player.x -4 < g2.enemy1.x + 8) &&
                 (g2.player.y +14 > g2.enemy1.y-8 && g2.player.y-4 < g2.enemy1.y + 8))
@@ -443,5 +427,16 @@ public class ViewController implements ActionListener, KeyListener {
         }
     }
 
+    public void collectRation(Game1 game, int gameRation){
+        game.newRation();
+        score += 10;
+        gameRation++;
+        if(gameRation % 4 == 0){
+            game.player.moveSpeed++;
+        }
+        if(gameRation % 2 == 0){
+            game.enemy1.moveSpeed++;
+        }
+    }
 
 }

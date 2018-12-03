@@ -8,7 +8,7 @@ public class Game2 extends Game1 {
     public Game2(Character player){
         super(player);
         enemy2 = new Character(5);
-        enemy2.x = 1199;
+        enemy2.x = 1160;
         enemy2.y = 0;
         game = 2;
     }

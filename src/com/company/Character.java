@@ -13,7 +13,6 @@ public class Character {
         x = 550;
         y = 250;
         currentGame = 0;
-
     }
 
     public void moveUp(){
