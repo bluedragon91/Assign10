@@ -11,7 +11,7 @@ public class OpRow1 extends JPanel {
 
     public OpRow1(){
         super();
-        setBackground(Color.gray);
+        setBackground(Color.DARK_GRAY);
         ButtonGroup colorGroup = new ButtonGroup();
         black = new JRadioButton("Black");
         dGray = new JRadioButton("Dark Gray");
@@ -23,6 +23,7 @@ public class OpRow1 extends JPanel {
         colorGroup.add(gray);
         colorGroup.add(white);
 
+        dGray.setSelected(true);
         add(black);
         add(dGray);
         add(gray);

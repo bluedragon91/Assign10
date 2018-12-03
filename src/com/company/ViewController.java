@@ -44,7 +44,7 @@ public class ViewController implements ActionListener, KeyListener {
             Thread.sleep(3500);
         }
         catch(Exception e){
-            System.out.println("I have no idea if this will work and If you're here that's a no");
+            System.out.println("Exception?");
         }
         frame.remove(intro);
         frame.add(menu);
@@ -87,6 +87,7 @@ public class ViewController implements ActionListener, KeyListener {
 
 
         }
+        //Options button listening
         else if(obj == menu.OptionsButton){
             frame.remove(menu);
             options.Back.addActionListener(this);
@@ -101,6 +102,7 @@ public class ViewController implements ActionListener, KeyListener {
             options.updateUI();
         }
 
+        //Instructions buttons
         else if(obj == menu.InstructionButton){
             frame.remove(menu);
             instruc.Back.addActionListener(this);
@@ -108,6 +110,7 @@ public class ViewController implements ActionListener, KeyListener {
             instruc.updateUI();
 
         }
+        //Credits buttons
         else if(obj == menu.Credits){
             frame.remove(menu);
             credit.Back.addActionListener(this);
@@ -173,7 +176,6 @@ public class ViewController implements ActionListener, KeyListener {
                     break;
             }
             gameTime++;
-            System.out.println("Game Time: " + gameTime);
             if(g1delay > gameTime) {
                 gameTimer.setDelay(g1delay - gameTime);
             }
@@ -182,6 +184,7 @@ public class ViewController implements ActionListener, KeyListener {
 
     }
 
+    //Method for changing the background in all the panels
     public void changeBG(Color bgColor){
         menu.setBackground(bgColor);
         credit.setBackground(bgColor);
@@ -194,6 +197,7 @@ public class ViewController implements ActionListener, KeyListener {
         overScreen.setBackground(bgColor);
     }
 
+    //Method to change the character color everywhere
     public void setGameChar(Color color){
         g1.setCharacter(color);
         g2.setCharacter(color);
@@ -201,6 +205,7 @@ public class ViewController implements ActionListener, KeyListener {
         gameMenu.setCharacter(color);
     }
 
+    //WASD Key movement detection
     @Override
     public void keyTyped(KeyEvent e){
         if(e.getKeyChar() == 'w'){ up(); }
@@ -211,6 +216,7 @@ public class ViewController implements ActionListener, KeyListener {
 
     }
 
+    //Arrow Key movement detection
     @Override
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_UP){ up(); }
@@ -240,15 +246,18 @@ public class ViewController implements ActionListener, KeyListener {
         player.currentGame = 0;
     }
 
-    public void gameOver(JPanel game){
+    public void gameOver(Game1 game){
+        overScreen.score = game.score;
         frame.remove(game);
         frame.add(overScreen);
         overScreen.updateUI();
-        overScreen.score = score;
+
         overScreen.repaint();
 
 
+
         gameTimer.setDelay(1000);
+
         //Uses gameTimer to pause game on the game over screen for 5 seconds
         if(gameTime >7){
             gameTime  =0;
@@ -257,7 +266,9 @@ public class ViewController implements ActionListener, KeyListener {
         if(!(gameTime < 5)) {
             gameMenu.score = score;
             loadGameMenu(overScreen);
+            game.score = 0;
         }
+
     }
 
     public void up(){
@@ -289,6 +300,8 @@ public class ViewController implements ActionListener, KeyListener {
         g3.repaint();
     }
 
+
+    //checks the collision based on the current game
     public void collisionCheck(){
         switch(player.currentGame){
             case 0:
@@ -356,66 +369,63 @@ public class ViewController implements ActionListener, KeyListener {
 
     //Game 1 collision
     public void game1Collision(){
+        //Back Button
         if((g1.player.x >500 && g1.player.x < 600)&&
                 (g1.player.y >150 && g1.player.y <200)){
             loadGameMenu(g1);
             gameTimer.stop();
             player.setCurrentGame(0);
         }
+        //Ration
         if((g1.player.x +14 > g1.ration.x-8 && g1.player.x -4 < g1.ration.x + 8) &&
                 (g1.player.y +14 > g1.ration.y-8 && g1.player.y-4 < g1.ration.y + 8)){
             collectRation(g1, game1Ration);
         }
+        //Enemy
         if((g1.player.x +14 > g1.enemy1.x-8 && g1.player.x -4 < g1.enemy1.x + 8) &&
                 (g1.player.y +14 > g1.enemy1.y-8 && g1.player.y-4 < g1.enemy1.y + 8)){
             gameOver(g1);
-            g1.score = 0;
         }
     }
 
     //Game 2 Collision
     public void game2Collision(){
+        //Back button
         if((g2.player.x >500 && g2.player.x < 600)&&
                 (g2.player.y >150 && g2.player.y <200)){
             loadGameMenu(g2);
             gameTimer.stop();
             player.setCurrentGame(0);
         }
+        //Ration
         if((g2.player.x +15 > g2.ration.x-8 && g2.player.x -4 < g2.ration.x + 8) &&
                 (g2.player.y +14 > g2.ration.y-8 && g2.player.y-4 < g2.ration.y + 8)){
             collectRation(g2, game2Ration);
         }
+        //Enemies
         if(((g2.player.x +14 > g2.enemy1.x-8 && g2.player.x -4 < g2.enemy1.x + 8) &&
                 (g2.player.y +14 > g2.enemy1.y-8 && g2.player.y-4 < g2.enemy1.y + 8))
                 ||((g2.player.x +14 > g2.enemy2.x-8 && g2.player.x -4 < g2.enemy2.x + 8) &&
                 (g2.player.y +14 > g2.enemy2.y-8 && g2.player.y-4 < g2.enemy2.y + 8))){
             gameOver(g2);
-            g2.score = 0;
         }
     }
 
     //Game 3 Collision
     public void game3Collision(){
+        //Back
         if((g3.player.x >500 && g3.player.x < 600)&&
                 (g3.player.y >150 && g3.player.y <200)){
             loadGameMenu(g3);
             gameTimer.stop();
             player.setCurrentGame(0);
         }
+        //Ration
         if((g3.player.x +15 > g3.ration.x-8 && g3.player.x -4 < g3.ration.x + 8) &&
                 (g3.player.y +14 > g3.ration.y-8 && g3.player.y-4 < g3.ration.y + 8)){
-            g3.newRation();
-            score += 10;
-            game3Ration++;
-            if(game3Ration % 4 == 0){
-                g3.player.moveSpeed+=2;
-            }
-            if(game3Ration % 2 == 0){
-                g3.enemy1.moveSpeed++;
-                g3.enemy2.moveSpeed++;
-                g3.enemy3.moveSpeed+=2;
-            }
+           collectRationG3(g3,game3Ration);
         }
+        //Enemies
         if(((g3.player.x +14 > g3.enemy1.x-8 && g3.player.x -4 < g3.enemy1.x + 8) &&
                 (g3.player.y +14 > g3.enemy1.y-8 && g3.player.y-4 < g3.enemy1.y + 8))
                 ||((g3.player.x +14 > g3.enemy2.x-8 && g3.player.x -4 < g3.enemy2.x + 8) &&
@@ -423,10 +433,10 @@ public class ViewController implements ActionListener, KeyListener {
                 ||((g3.player.x +14 > g3.enemy3.x-8 && g3.player.x -4 < g3.enemy3.x + 8) &&
                 (g3.player.y +14 > g3.enemy3.y-8 && g3.player.y-4 < g3.enemy3.y + 8))){
             gameOver(g3);
-            g3.score = 0;
         }
     }
 
+    //For when a player hits a ration block, it will make the first enemy faster
     public void collectRation(Game1 game, int gameRation){
         game.newRation();
         score += 10;
@@ -436,6 +446,15 @@ public class ViewController implements ActionListener, KeyListener {
         }
         if(gameRation % 2 == 0){
             game.enemy1.moveSpeed++;
+        }
+    }
+
+    //For in game 3 where there's 3 enemies and all the enemies get faster
+    public void collectRationG3(Game3 game, int gameRation){
+        collectRation(game, game3Ration);
+        if(gameRation % 2 == 0){
+            game.enemy2.moveSpeed++;
+            game.enemy3.moveSpeed+=2;
         }
     }
 

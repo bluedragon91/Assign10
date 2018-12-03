@@ -15,6 +15,6 @@ public class Intro extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.white);
-        g.drawString("Welcome to Conner's Assignment 10", 500, 300);
+        g.drawString("Welcome to Conner's Final Project", 500, 300);
     }
 }

@@ -6,7 +6,6 @@ import java.awt.*;
 
 public class Game3 extends Game2 {
     Character enemy3;
-    int score =0;
     public Game3(Character player){
         super(player);
         enemy3 = new Character(5);

@@ -10,7 +10,7 @@ public class OpRow2 extends JPanel {
 
     public OpRow2(){
         super();
-        setBackground(Color.gray);
+        setBackground(Color.DARK_GRAY);
         ButtonGroup charGroup = new ButtonGroup();
 
 
@@ -22,6 +22,7 @@ public class OpRow2 extends JPanel {
         charGroup.add(white);
         charGroup.add(black);
 
+        white.setSelected(true);
         add(blue);
         add(white);
         add(black);

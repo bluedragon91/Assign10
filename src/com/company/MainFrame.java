@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
     MainFrame(){
-        super("Lab 10 - A Game Selection Screen");
+        super("Conner's Final Project");
         MacLayoutSetup();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1200, 600);

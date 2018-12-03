@@ -19,7 +19,7 @@ public class Credits extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.WHITE);
-        g.drawString("Made by Conenr Smith for IST 240", 500, 300);
+        g.drawString("Made by Conner Smith for IST 240", 500, 300);
 
     }
 }

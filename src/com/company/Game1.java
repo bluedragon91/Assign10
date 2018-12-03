@@ -44,6 +44,7 @@ public class Game1 extends JPanel {
     }
 
     public void seekPlayer(){
+        //Enemy 1 movement
         if(player.x > enemy1.x){
             enemy1.moveRight();
         }
